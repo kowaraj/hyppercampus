@@ -33,23 +33,21 @@
 (def path-3 [:root :1 :1-1])
 
 ;; add attributes
-(db/set-db-node-attr db path-3 :path "root-1-11")
+(= (db/set-db-node-attr db path-3 :path "root-1-11")
+   {:root {:nodes {:1 {:nodes {:1-1 {:nodes {}, :path "root-1-11", :link-to {}, :link-from {}}}, :path nil, :link-to {}, :link-from {}}}, :path nil, :link-to {}, :link-from {}}})
 
-(def path-4 [:root :1 :1-1])
+(def path-4 [:root])
 
-(db/del-db-node db path-4 "path")
+;; add another node 
+(= (db/add-db-node db path-4 "2")
+   {:root {:nodes {:1 {:nodes {:1-1 {:nodes {:2 {:nodes {}, :path nil, :link-to {}, :link-from {}}}, :path "root-1-11", :link-to {}, :link-from {}}}, :path nil, :link-to {}, :link-from {}}}, :path nil, :link-to {}, :link-from {}}})
+
+(def path-5 [:root :2])
+
+;; check it
+(= (db/get-db-node db path-4)
+
+(db/del-db-node db path-4 "1")
 ;@db
-
-{:root {:nodes
-        {:1 {:nodes
-             {:1-1 {:nodes {:path "root-1-11"},
-                    :path nil,
-                    :link-to {},
-                    :link-from {}}},
-             
-             :path nil, :link-to {}, :link-from {}}}, :path nil, :link-to {}, :link-from {}}}
-
-
-
 
 
