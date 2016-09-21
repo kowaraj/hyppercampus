@@ -76,10 +76,3 @@
   [db path attr-name]
   (del-db-node-attr-fn db (path/nodes path) attr-name))
 
-
-
-
-
-
-
-

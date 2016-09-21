@@ -53,6 +53,9 @@
 ;(db/add-db-node (data/db) [:root] "2")
 ;(db/add-db-node (data/db) [:root :2] "2-1")
 ;(db/add-db-node (data/db) [:root :2] "2-2")
+;(db/add-db-node (data/db) [:root :1] "1-1")
+;(db/add-db-node (data/db) [:root :1] "1-2")
+;(db/add-db-node (data/db) [:root :1] "1-3")
 ;;(update-listbox-data)
 ;;(update-listbox-data)
 ;;@(data/db)
@@ -79,7 +82,12 @@
   (update-kids-data)
   )
 
-
+(defn callback-list-selection-changed
+  [_ _ _ _]
+  (println "! callback-list-selection-changed")
+  (update-kids-data)
+  )
+  
 
 (defn add-watchers
   []
@@ -90,7 +98,12 @@
 
   (add-watch (path/current-path)
              nil
-             callback-path-changed))
+             callback-path-changed)
+
+  (add-watch (vol/list-selection)
+             nil
+             callback-list-selection-changed)
+  )
 ;(add-watchers)
 
 

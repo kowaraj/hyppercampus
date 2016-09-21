@@ -67,6 +67,8 @@
 
 (def m-list-selection (ref {:index 0 :name nil}))
 
+(defn list-selection [] m-list-selection)
+
 (defn list-selection-get-name
   []
   (:name @m-list-selection))
