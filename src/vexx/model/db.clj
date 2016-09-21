@@ -18,6 +18,11 @@
 
 ;;(get-db-node (data/db) @(path/current-path))
 
+(defn get-db-node-kids 
+  [db path node-name]
+  {:pre [(= (type node-name) java.lang.String)]}
+  (let [kid-path (path/get-level-down path node-name)]
+    (get-db-node-fn db (path/nodes kid-path))))
 
 
 (defn- add-db-node-fn
@@ -70,6 +75,7 @@
 (defn del-db-node-attr
   [db path attr-name]
   (del-db-node-attr-fn db (path/nodes path) attr-name))
+
 
 
 

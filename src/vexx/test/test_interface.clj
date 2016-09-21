@@ -8,7 +8,7 @@
 ))
 
 ;; should trigger the db watcher
-(dosync (ref-set (data/db) {})) 
+(dosync (ref-set m-db {:root {:nodes {} } :info "no info available"}))
 
 ;; should trigger the db watcher
 (db/add-db-node (data/db) [:root] "1")

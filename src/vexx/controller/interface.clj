@@ -27,11 +27,21 @@
 
 (defn update-listbox-data
   []
-  (dbg/p)
   (let [node (db/get-db-node (data/db) @(path/current-path))]
-    (dbg/p (keys node))
-    (dbg/p node)
     (vol/listbox-data-set (vol/listbox-data-make node))))
+
+
+(defn update-kids-data
+  []
+  (dbg/p)
+  (let [node (db/get-db-node-kids (data/db)
+                                  @(path/current-path)
+                                  (vol/list-selection-get-name))]
+    (vol/kids-data-set (vol/kids-data-make node))))
+;(db/get-db-node-kids (data/db) @(path/current-path) (vol/list-selection-get-name))
+;(vol/kids-data-make {:2-1 {:nodes {}, :path nil, :link-to {}, :link-from {}}, :2-2 {:nodes {}, :path nil, :link-to {}, :link-from {}}})
+;(vol/list-selection-get-name)
+;(update-kids-data)
 
 ;;(map hash-map (range) [1 2 3])
 ;;(println (vol/listbox-data-make node))))
@@ -55,16 +65,18 @@
 (defn callback-db-changed
   [_ _ _ _]
   ;;;(vol/listbox-data-set (vol/get-current-listbox-data)))
-  (println "! callback-db-changed")
+  (println "! callback-db-changed !")
   (update-listbox-data)
+  (update-kids-data)
   )
 
 
 (defn callback-path-changed
   [_ _ _ _]
   ;;;(vol/listbox-data-set (vol/get-current-listbox-data)))
-  (println "! callback-path-changed")
+  (println "! callback-path-changed !")
   (update-listbox-data)
+  (update-kids-data)
   )
 
 
@@ -79,6 +91,7 @@
   (add-watch (path/current-path)
              nil
              callback-path-changed))
+;(add-watchers)
 
 
 

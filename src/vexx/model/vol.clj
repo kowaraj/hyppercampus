@@ -11,7 +11,7 @@
 (defn listbox-data-set [v-of-dicts]
   (dosync (ref-set m-listbox-data v-of-dicts)))
 ;;(listbox-data-set [{:name "a" :index 1} {:name "b" :index 2}])
-(defn listbox-item-get-name [item] (:name item))
+(defn listbox-item-get-name [item] (name (:name item)))
 
 
 (defn listbox-data-make
@@ -35,6 +35,32 @@
 ;; (map #(reduce into '({} (hash-map %1 %2) (hash-map %3 %4)) )
 ;;(reduce into '({} {:1 "a"} {:2 "b"})) ;;=> {:1 "a", :2 "b"}
 
+(comment "----------------------------------------------------- kids data -- ")
+
+(def m-kids-data (ref []))
+(defn kids-data [] m-kids-data)
+(defn kids-data-set [v-of-dicts]
+  (dosync (ref-set m-kids-data v-of-dicts)))
+;;(kids-data-set [{:name "a" :index 1} {:name "b" :index 2}])
+(defn kids-item-get-name [item] (name (:name item)))
+
+(defn kids-data-make
+  "
+  Tranform the list of kids names to the list of dicts of :name and :index
+    from : [:2-1 :2-2]
+    to   : ({:name :2-1, :index 0} {:name :2-2, :index 1})
+  "
+  [node] ;current node (parent)
+  (dbg/p node)
+  (let [kids-by-name (keys node)
+        list-of-dicts (map
+                       (fn [kn n ki i]
+                         (reduce into  [{} (hash-map kn n) (hash-map ki i)]))
+                       (repeat :name) kids-by-name
+                       (repeat :index) (range))]
+    (apply vector list-of-dicts)))
+
+
 
 (comment "----------------------------------------------------- listbox sel -- ")
 
@@ -44,12 +70,13 @@
 (defn list-selection-get-name
   []
   (:name @m-list-selection))
+;(list-selection-get-name)
 
-(defn list-selection-set-name
+(defn list-selection-set-by-name
   [sel-item-name]
   (dbg/p ": sel= " sel-item-name)
   (dosync (alter m-list-selection assoc :name sel-item-name)))
-;; (list-selection-set-name "test name")
+;; (list-selection-set-by-name "1")
 ;; @m-list-selection
 
 (defn list-selection-set-index

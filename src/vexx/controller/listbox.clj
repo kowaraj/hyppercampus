@@ -11,12 +11,13 @@
    )
   )
 
-;(empty? false)
-
-
 (defn add-watch-listbox-data
-  [lb]
-  (println "add-watch....")
+  "
+  To add a watch on vol/listbox-data (a ref)
+  to update the main listbox view (input arg)
+  "
+  [listbox-widget]
+
   (let [make-list-model
         (fn [items]
           (if (not (empty? items))
@@ -30,7 +31,7 @@
     (add-watch (vol/listbox-data)
                nil
                (fn [_ _ _ items]
-                 (.setModel lb (make-list-model items))))))
+                 (.setModel listbox-widget (make-list-model items))))))
 
 ;; (defn add-watch-listbox
 ;;   [lb]
@@ -139,7 +140,7 @@
     
 (defn listener-selection
   [e]
-;  (data/list-selection-set-name (ss/selection e))
+  (vol/list-selection-set-by-name (ss/selection e))
 
 ;  (let [sel-data (data/sel-item-data) ]
     ;(c-tpane/add-tabs sel-data)

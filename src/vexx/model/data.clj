@@ -22,6 +22,8 @@
                    }
             :info "no info available"
             }))
+;(dosync (ref-set m-db {:root {:nodes {} } :info "no info available"}))
+
 
 (defn db [] m-db)
 ;@(db)

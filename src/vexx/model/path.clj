@@ -46,6 +46,7 @@
 
 (defn get-level-down
   [path node-name]
+  {:pre [(= (type node-name) java.lang.String)]}
   (conj path (keyword node-name)))
 
 
