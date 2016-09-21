@@ -1,10 +1,9 @@
 (ns vexx.model.item
   (:require
    [vexx.model.debug :as dbg]
-;   [vexx.model.utils :as u]
-   [vexx.model.data :as data]
-   [vexx.model.search :as search]
-   [vexx.model.db :as db]
+
+
+
    ))
 
 (defn make-new-item
@@ -16,41 +15,41 @@
                         :link-from {}
                         }})
   
-(defn- add-item-to-path
-  [db item path]
-  (db/add-element-to-path db item path))
+;; (defn- add-item-to-path
+;;   [db item path]
+;;   (db/add-element-to-path db item path))
 
 
-(defn- add-item-fn
-  [db item]
-  (add-item-to-path db item (data/current-path)))
+;; (defn- add-item-fn
+;;   [db item]
+;;   (add-item-to-path db item (data/current-path)))
 
 
-(defn- add-item
-  "Add item to db"
-  [item-name]
-  (dbg/p item-name)
-  (let [item (make-new-item item-name)]
-    (add-item-fn data/db item)
-    item))
+;; (defn- add-item
+;;   "Add item to db"
+;;   [item-name]
+;;   (dbg/p item-name)
+;;   (let [item (make-new-item item-name)]
+;;     (add-item-fn data/db item)
+;;     item))
 
-(defn- get-item-fn
-  [item-name]
-  (let [path (data/current-path)]
-    (search/search-itemname-in-path item-name path)))
+;; (defn- get-item-fn
+;;   [item-name]
+;;   (let [path (data/current-path)]
+;;     (search/search-itemname-in-path item-name path)))
 
   
-(defn get-item
-  "Get item from db if found or default"
-  [item-name]
-  (dbg/p item-name)
-  (let [item (get-item-fn item-name)]
-    (if item
-      item
-      (add-item item-name))))
+;; (defn get-item
+;;   "Get item from db if found or default"
+;;   [item-name]
+;;   (dbg/p item-name)
+;;   (let [item (get-item-fn item-name)]
+;;     (if item
+;;       item
+;;       (add-item item-name))))
 
-(defn test-get-new-item
-  [i-name]
-  (make-new-item i-name))
+;; (defn test-get-new-item
+;;   [i-name]
+;;   (make-new-item i-name))
 
 

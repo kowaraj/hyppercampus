@@ -16,9 +16,7 @@
 ;; (def m-current-path (ref [1 2 3]))
 ;; (def m-current-path (ref [:root]))
 
-(defn current-path
-  []
-  @m-current-path)
+(defn current-path [] m-current-path)
 ;(current-path)
 
 (defn is-at-root
@@ -38,7 +36,8 @@
 ;@m-current-path
 
 (defn go-level-down
-  [node-name]
+  [node-name] ; node-name, not item-name, means a keyword
+  {:pre [(= (type node-name) clojure.lang.Keyword)]}
   (dosync (alter m-current-path conj node-name)))
 ;; (def m-current-path (ref [1 2 3]))
 ;(go-level-down 4)

@@ -3,12 +3,12 @@
    [vexx.model.data :as data]
    [vexx.model.item :as item]
    [vexx.model.path :as path]
+   [vexx.model.debug :as dbg]
    ))
 
 (defn is-path-valid [p] (not-any? #(= nil %) p))
 
-
-(defn get-db-node-fn
+(defn- get-db-node-fn
   [db path]
   (get-in @db path))
 
@@ -16,7 +16,11 @@
   [db path]
   (get-db-node-fn db (path/nodes path)))
 
-(defn add-db-node-fn
+;;(get-db-node (data/db) @(path/current-path))
+
+
+
+(defn- add-db-node-fn
   [db path node-name]
   {:pre [(= (type {}) clojure.lang.PersistentArrayMap)
          (= (type node-name) java.lang.String)]}
@@ -27,11 +31,14 @@
                                into (item/make-new-item node-name))))))
 (defn add-db-node
   [db path node-name]
+  (dbg/p node-name path)
   (add-db-node-fn db (path/nodes path) node-name))
 
-(defn set-db-node-attr-fn
+
+
+(defn- set-db-node-attr-fn
   [db path attr-name attr-val]
-  (println "set-db-node-attr-fn: path = " path)
+  ;;(println "set-db-node-attr-fn: path = " path)
   (dosync (alter db
                  #(update-in % path
                              assoc attr-name attr-val))))
@@ -40,9 +47,11 @@
   (set-db-node-attr-fn db (path/attr path) attr-name attr-val))
 
 
-(defn del-db-node-fn 
+
+
+(defn- del-db-node-fn 
   [db path node-name]
-  (println "del-db-node-fn: path = " path node-name)
+  ;;(println "del-db-node-fn: path = " path node-name)
   (dosync (alter db
                  #(update-in % path
                              dissoc (keyword node-name)))))
@@ -51,7 +60,9 @@
   (del-db-node-fn db (path/nodes path) node-name))
 
 
-(defn del-db-node-attr-fn
+
+
+(defn- del-db-node-attr-fn
   [db path attr-name]
   (dosync (alter db
                  #(update-in % path

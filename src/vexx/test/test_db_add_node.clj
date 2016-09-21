@@ -45,9 +45,12 @@
 (def path-5 [:root :2])
 
 ;; check it
-(= (db/get-db-node db path-4)
+(db/get-db-node db path-4)
 
 (db/del-db-node db path-4 "1")
 ;@db
+
+(db/get-db-node db path-4)
+(db/add-db-node db path-4 "331")
 
 
