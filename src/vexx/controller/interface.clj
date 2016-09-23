@@ -26,45 +26,35 @@
 
 
 (defn update-listbox-data
+  "
+  Takes the root-node and updates the listbox data
+  "
   []
-  (let [node (db/get-db-node (data/db) @(path/current-path))]
-    (vol/listbox-data-set (vol/listbox-data-make node))))
+  (let [root-node (db/get-db-node (data/db) @(path/current-path))]
+    (vol/listbox-data-set (vol/listbox-data-make root-node))))
 
 
 (defn update-kids-data
+  "
+  Reads the selected node and updates the rest of view
+  "
+  []
+  (dbg/p)
+  (let [node (db-hl/get-node)]
+    (vol/kids-data-set (vol/kids-data-make node))))
+
+
+(defn update-tabs
+  []
+  )
+(defn update-content
   []
   (dbg/p)
   (let [node (db/get-db-node-kids (data/db)
                                   @(path/current-path)
                                   (vol/list-selection-get-name))]
     (vol/kids-data-set (vol/kids-data-make node))))
-;(db/get-db-node-kids (data/db) @(path/current-path) (vol/list-selection-get-name))
-;(vol/kids-data-make {:2-1 {:nodes {}, :path nil, :link-to {}, :link-from {}}, :2-2 {:nodes {}, :path nil, :link-to {}, :link-from {}}})
-;(vol/list-selection-get-name)
-;(update-kids-data)
-
-;;(map hash-map (range) [1 2 3])
-;;(println (vol/listbox-data-make node))))
-;;(db/get-db-node (data/db) @(path/current-path))
-;;(keys (db/get-db-node (data/db) @(path/current-path)))
-;;(update-listbox-data)
-;;(:nodes (:root @(data/db)))
-;(db/add-db-node (data/db) [:root] "1")
-;(db/add-db-node (data/db) [:root] "2")
-;(db/add-db-node (data/db) [:root :2] "2-1")
-;(db/add-db-node (data/db) [:root :2] "2-2")
-;(db/add-db-node (data/db) [:root :1] "1-1")
-;(db/add-db-node (data/db) [:root :1] "1-2")
-;(db/add-db-node (data/db) [:root :1] "1-3")
-;;(update-listbox-data)
-;;(update-listbox-data)
-;;@(data/db)
-;;@(path/current-path)
-;;(path/go-level-down :2)
-;;(update-listbox-data)
-;;(path/go-level-up)
-;; @(vol/listbox-data)
-
+  )
 (defn callback-db-changed
   [_ _ _ _]
   ;;;(vol/listbox-data-set (vol/get-current-listbox-data)))
@@ -83,9 +73,15 @@
   )
 
 (defn callback-list-selection-changed
+  "
+  Update the ref to data structures.
+  The view will be updated by those data structure watchers
+  "
   [_ _ _ _]
-  (println "! callback-list-selection-changed")
-  (update-kids-data)
+  ;;(println "! callback-list-selection-changed")
+  (update-kids-data) 
+  (update-tags)
+  (update-content)
   )
   
 
