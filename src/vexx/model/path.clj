@@ -51,9 +51,22 @@
 
 
 (defn nodes
-  " path for a node" 
+  " path for a node's nodes
+    - for path [1 2 3]
+    - ret val will be [1 :nodes 2 :nodes 3 :nodes]
+  " 
   [path]
   (interleave path (repeat :nodes)))
+
+(defn node
+  " path for a node itself
+    - for path [1 2 3]
+    - ret val will be [1 :nodes 2 :nodes 3 :nodes]
+  " 
+  [path]
+  (pop (apply vector (interleave path (repeat :nodes)))))
+;; (interleave [1 2 3] (repeat :nodes)) => (1 :nodes 2 :nodes 3 :nodes)
+;; (pop [1 2 3])
 
 (defn attr
   " path for a attribute (cut last :nodes)"

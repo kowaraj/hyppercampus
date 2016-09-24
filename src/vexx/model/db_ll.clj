@@ -29,7 +29,7 @@
   [db path node-name]
   {:pre [(= (type {}) clojure.lang.PersistentArrayMap)
          (= (type node-name) java.lang.String)]}
-  (if (get-db-node db (path/get-level-down path node-name)) ; check if exists
+  (if (get-db-node-fn db (path/nodes (path/get-level-down path node-name))) ; check if exists
     @db
     (dosync (alter db
                    #(update-in % path

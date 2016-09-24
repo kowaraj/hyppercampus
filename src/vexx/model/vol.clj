@@ -73,11 +73,18 @@
   []
   (:name @m-list-selection))
 ;(list-selection-get-name)
+(defn list-selection-get-name-str
+  []
+  (name (list-selection-get-name)))
+;(list-selection-get-name-str)
+
+;(list-selection-get-name)
 
 (defn list-selection-set-by-name
   [sel-item-name]
   (dbg/p ": sel= " sel-item-name)
-  (dosync (alter m-list-selection assoc :name sel-item-name)))
+  (if sel-item-name
+    (dosync (alter m-list-selection assoc :name sel-item-name))))
 ;; (list-selection-set-by-name "1")
 ;; @m-list-selection
 
@@ -87,3 +94,28 @@
 ;; (list-selection-set-index 666)
 ;; @m-list-selection
 
+
+(comment "----------------------------------------------------- content data -- ")
+
+(def m-content-data (ref {:name "test-name" :content "test-content"}))
+(defn content-data [] m-content-data)
+(defn content-data-get-tabs
+  "Get a list of tabs. Each tab is a dict {:name ... :content ... :type ...}
+  "
+  [item]
+  nil)
+
+(defn- content-data-make
+  [node] ;current db node (selected)
+  (:data node))
+
+(defn content-data-set
+  [db-node]
+  (let [content (content-data-make db-node)]
+    (dosync (ref-set m-content-data content))))
+;;(content-data-set {:name "test-name" :content "test-content2"})
+
+
+(defn content-data-update
+  [data]
+  

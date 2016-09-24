@@ -12,8 +12,11 @@
    [vexx.model.db-ll :as db-ll]
    ))
 
-
 (defn get-db-node
+  [db path]
+  (db-ll/get-db-node-fn db (path/node path)))
+
+(defn get-db-node-nodes
   [db path]
   (db-ll/get-db-node-fn db (path/nodes path)))
 

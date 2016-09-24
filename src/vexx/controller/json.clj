@@ -14,7 +14,7 @@
   (let [json-str (slurp db-filename)
         loaded-db (json/read-str json-str :key-fn keyword)
         ]
-    (dosync (ref-set m-data/db loaded-db))))
+    (m-data/db-set loaded-db)));;(dosync (ref-set m-data/db loaded-db))))
 ;(load-from-file)
 
 
@@ -33,7 +33,7 @@
   Items in db are keywords, when dumped to file transformed to strings
   "
   []
-  (let [data-json (json/write-str @m-data/db)]
+  (let [data-json (json/write-str @(m-data/db))]
     ;;;(backup-old-file)
     (spit db-filename data-json)))
 ;(save-to-file)

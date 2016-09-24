@@ -5,24 +5,56 @@
    [vexx.model.item :as item]
    [vexx.model.data :as data]
    [vexx.model.db :as db]
+   [vexx.model.db-hl :as db-hl]
    [vexx.model.path :as path]
+   [vexx.model.path-hl :as path-hl]
    [vexx.model.vol :as vol]
 
    ))
 
-(defn get-item
-  "Get item  - from db if found, else default item"
-  [item-name]
-  (dbg/p item-name)
-  (db/get-db-node (data/db) (path/go-level-down (keyword item-name))))
+;;;==================================
+;;; obsolete, removed: Part I : read/write db
+;;; replaced by db-hl, db/get-node...
+;;;
+;;;   (defn get-item...
+;;;   (defn add-item...
+;;;
+;; Part II : update widget's (vol) data structures
+;;
+;;   (update-listbox-data) -> list-data
+;;   (update-kids-data)    -> kids-data
+;;   (update-tags)         -> tags-data
+;;   (update-content)      -> content-data
+;;    ...
+;;  - when called from watchers/callbacks of persistent data str.
+;;
+;; Part III : the callbacks
+;;
+;;   (add-watch (data/db) ...
+;;   (add-watch (path/current-path)...
+;;   (add-watch (vol/list-selection)...
+;;
+;; Part IV ---
+;;   - to modify (update) db from the widgets
 
 
-(defn add-item
-  "Add item to db"
-  [item-name]
-  (dbg/p item-name)
-  (db/add-db-node (data/db) @(path/current-path) item-name))
 
+;; ;; ------------------------------------------------- part I ---
+;; (defn get-item
+;;   "Get item  - from db if found, else default item"
+;;   [item-name]
+;;   (dbg/p item-name)
+;;   (db/get-db-node (data/db) (path/go-level-down (keyword item-name))))
+
+;; (defn add-item
+;;   "Add item to db"
+;;   [item-name]
+;;   (dbg/p item-name)
+;;   (db/add-db-node (data/db) @(path/current-path) item-name))
+
+
+
+;; ------------------------------------------------- part II ---
 
 
 (defn update-listbox-data
@@ -30,31 +62,34 @@
   Takes the root-node and updates the listbox data
   "
   []
-  (let [root-node (db/get-db-node (data/db) @(path/current-path))]
+  (let [root-node (db/get-db-node-nodes (data/db) @(path/current-path))]
     (vol/listbox-data-set (vol/listbox-data-make root-node))))
 
 
 (defn update-kids-data
   "
-  Reads the selected node and updates the rest of view
+  Read selected node and update the rest of view
   "
   []
   (dbg/p)
-  (let [node (db-hl/get-node)]
+  (let [node (db-hl/get-node-nodes)]
     (vol/kids-data-set (vol/kids-data-make node))))
 
 
 (defn update-tabs
   []
   )
+ 
 (defn update-content
   []
   (dbg/p)
-  (let [node (db/get-db-node-kids (data/db)
-                                  @(path/current-path)
-                                  (vol/list-selection-get-name))]
-    (vol/kids-data-set (vol/kids-data-make node))))
-  )
+  (let [node (db-hl/get-node)]
+    (vol/content-data-set node)))
+
+
+
+;; ------------------------------------------------- part III ---
+
 (defn callback-db-changed
   [_ _ _ _]
   ;;;(vol/listbox-data-set (vol/get-current-listbox-data)))
@@ -62,7 +97,6 @@
   (update-listbox-data)
   (update-kids-data)
   )
-
 
 (defn callback-path-changed
   [_ _ _ _]
@@ -80,7 +114,7 @@
   [_ _ _ _]
   ;;(println "! callback-list-selection-changed")
   (update-kids-data) 
-  (update-tags)
+;;  (update-tags)
   (update-content)
   )
   
@@ -101,6 +135,24 @@
              callback-list-selection-changed)
   )
 ;(add-watchers)
+
+
+
+;; ------------------------------------------------- part IV ---
+
+;; to modify (update) db from the widgets
+
+(defn update-content-data
+  [tf-text]
+  (dbg/p tf-text)
+  ;; pre: some keys must be present
+  (db/set-db-node-attr (data/db)
+;                       (path-hl/get-node-path (vol/list-selection-get-name)
+                       (path-hl/get-selected-node-path)
+                       :data
+                       {:name "some-def-name" :content tf-text}))
+
+  
 
 
 

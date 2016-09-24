@@ -11,6 +11,7 @@
   {:pre [(= (type item-name) java.lang.String)]}
   {(keyword item-name) {:nodes {}
                         :path nil
+                        :data {:name nil :content "default content"}
                         :link-to {}
                         :link-from {}
                         }})

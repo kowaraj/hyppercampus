@@ -4,7 +4,10 @@
    [vexx.model.item :as item]
    [vexx.model.data :as data]
    [vexx.model.db :as db]   
+   [vexx.model.db-hl :as db-hl]   
    [vexx.model.item :as item]
+   [vexx.model.path :as path]
+   [vexx.model.path-hl :as path-hl]
 ))
 
 ;; should trigger the db watcher
@@ -42,3 +45,11 @@
 ;;(path/go-level-up)
 ;; @(vol/listbox-data)
 
+;;(db/add-db-node (data/db) [:root :1] "1-3")
+;;(db/get-db-node (data/db) @(path/current-path))
+;;(db/get-db-node (data/db) [:root :1])
+;;(db/get-db-node (data/db) [:root :1 :1-1])
+;;(db/add-db-node (data/db) [:root :1] "1-666")
+;;(db/get-db-node (data/db) [:root :1 :1-666])
+;;(db/add-db-node (data/db) [:root] "root-666")
+;;(db/add-db-node (data/db) [:root] "root-667")

@@ -22,12 +22,15 @@
                    }
             :info "no info available"
             }))
-;(dosync (ref-set m-db {:root {:nodes {} } :info "no info available"}))
+
+(defn db-set
+  [data-dict]
+  (dosync (ref-set m-db data-dict)))
 
 
 (defn db [] m-db)
 ;@(db)
 ;(keys (:nodes (:root @(db))))
-
+;(:content (:data (:root-667 (:nodes (:root @(db))))))
 
 
