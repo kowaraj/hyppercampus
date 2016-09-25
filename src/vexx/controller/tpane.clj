@@ -39,7 +39,7 @@
 
 (defn- populate-content-panel
   [p data]
-  (dbg/p data)
+  ;(dbg/p data)
   (let [
         tf (ss/text :id (:name data)
                     :text (:content data)
@@ -74,11 +74,11 @@
   to update the second listbox view (input arg)
   "
   [the-widget]
-  (dbg/p)
+  ;(dbg/p)
   (add-watch (vol/content-data)
              nil
              (fn [_ _ _ d]
-               (dbg/p "fn ================================= " d)
+               ;(dbg/p "fn ================================= " d)
                (populate-content-panel the-widget d))))
 
 

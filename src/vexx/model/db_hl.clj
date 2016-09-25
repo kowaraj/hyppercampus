@@ -27,5 +27,19 @@
         node-path (path-hl/get-node-path sel-node-name)]
     (db/get-db-node-nodes db node-path)))
 
+(defn add-node
+  [node-name]
+  (let [db (data/db)
+        path (path-hl/get-selected-node-path)
+        ]
+    (db/add-db-node db path node-name)))
+
+(defn del-selected-node
+  []
+  (let [db (data/db)
+        sel-node-name (vol/list-selection-get-name-str)
+        node-path (path-hl/get-node-path sel-node-name)]
+    (db/del-db-node db node-path sel-node-name)))
+
   
 

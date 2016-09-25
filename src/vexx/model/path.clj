@@ -38,11 +38,12 @@
 (defn go-level-down
   [node-name] ; node-name, not item-name, means a keyword
   {:pre [(= (type node-name) clojure.lang.Keyword)]}
+  (dbg/p node-name)
+  (dbg/p (type node-name))
   (dosync (alter m-current-path conj node-name)))
 ;; (def m-current-path (ref [1 2 3]))
 ;(go-level-down 4)
 ;@m-current-path
-
 
 (defn conj-node
   [path node-name]

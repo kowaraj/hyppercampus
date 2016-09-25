@@ -21,6 +21,7 @@
     to   : ({:name :2-1, :index 0} {:name :2-2, :index 1})
   "
   [node] ;current node  
+  (dbg/p node)
   (let [kids-by-name (keys node)
         list-of-dicts (map
                        (fn [kn n ki i]
@@ -77,14 +78,17 @@
   []
   (name (list-selection-get-name)))
 ;(list-selection-get-name-str)
+(defn list-selection-get-name-kw
+  []
+  (keyword (list-selection-get-name)))
 
 ;(list-selection-get-name)
 
 (defn list-selection-set-by-name
   [sel-item-name]
   (dbg/p ": sel= " sel-item-name)
-  (if sel-item-name
-    (dosync (alter m-list-selection assoc :name sel-item-name))))
+  (dosync (alter m-list-selection assoc :name sel-item-name)))
+
 ;; (list-selection-set-by-name "1")
 ;; @m-list-selection
 
@@ -116,6 +120,6 @@
 ;;(content-data-set {:name "test-name" :content "test-content2"})
 
 
-(defn content-data-update
-  [data]
+;; (defn content-data-update
+;;   [data]
   
