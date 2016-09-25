@@ -15,7 +15,7 @@
   "called when main listbox selection changes (only need selected node)"
   []
   (let [db (data/db)
-        sel-node-name (vol/list-selection-get-name-str)
+        sel-node-name (vol/list-selection-get-name)
         node-path (path-hl/get-node-path sel-node-name)]
     (db/get-db-node db node-path)))
 
@@ -23,7 +23,7 @@
   "called when main listbox selection changes (only need selected node)"
   []
   (let [db (data/db)
-        sel-node-name (vol/list-selection-get-name-str)
+        sel-node-name (vol/list-selection-get-name)
         node-path (path-hl/get-node-path sel-node-name)]
     (db/get-db-node-nodes db node-path)))
 
@@ -32,14 +32,25 @@
   (let [db (data/db)
         path (path-hl/get-selected-node-path)
         ]
+    ;; (if (get-db-node-fn db name) ; check if exists
+    ;; @db
+    (db/add-db-node db path node-name)))
+
+(defn add-node-to-root
+  [node-name]
+  (let [db (data/db)
+        path @(path/current-path)
+        ]
     (db/add-db-node db path node-name)))
 
 (defn del-selected-node
   []
   (let [db (data/db)
-        sel-node-name (vol/list-selection-get-name-str)
-        node-path (path-hl/get-node-path sel-node-name)]
-    (db/del-db-node db node-path sel-node-name)))
-
+        sel-node-name (vol/list-selection-get-name)
+;;;        node-path (path-hl/get-node-path sel-node-name)]
+        path @(path/current-path)]
+    (db/del-db-node db path sel-node-name)))
+;(path-hl/get-node-path "1")
+;(db/del-db-node (data/db) [:root] "1")
   
 

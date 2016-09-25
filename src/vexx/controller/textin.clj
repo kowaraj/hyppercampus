@@ -2,9 +2,10 @@
   (:require
    [seesaw.core :as ss]
 
-   [vexx.controller.interface :as interface]
+;;;   [vexx.controller.interface :as interface]
 
    [vexx.model.debug :as dbg]
+   [vexx.model.db-hl :as db-hl]
    [vexx.model.widgets :as widgets]
    )
   )
@@ -13,7 +14,7 @@
   [e]
   (let [w-text-in (.getSource e)
         new-el-name (ss/text w-text-in)]
-    (interface/add-item new-el-name)))
+    (db-hl/add-node-to-root new-el-name)))
   
 (defn- listener-keytyped
   [e]

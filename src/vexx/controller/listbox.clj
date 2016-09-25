@@ -49,7 +49,7 @@
 
 (defn listener-keyreleased
   [e] 
-  (dbg/p e)
+  ;;(dbg/p e)
   
   (if (= java.awt.event.KeyEvent/VK_RIGHT (.getKeyCode e))
     (let [jl (.getSource e)]
@@ -70,6 +70,7 @@
           ;; new-size (dec (.getSize (.getModel jl)))
           ;; new-sel-index (if (>= sel-index new-size) (dec new-size) sel-index)
           ]
+      (dbg/p "del")
       ;;(println " : view.listbox/listener-keyreleased: si=" sel-index ", ns=" new-size "ni=" new-sel-index)
       ;; (c-l/delete-item)
       ;; (.setSelectedIndex jl new-sel-index)
@@ -100,7 +101,7 @@
               (if/add-kid-to-selected-node {:name a :type b})
               ))
           )))
-    (dbg/p "left"))
+    );;;    (dbg/p "something else pressed"))
   )
 
 

@@ -25,15 +25,24 @@
 ;;     (get-db-node-fn db (path/nodes node-path))))
 
 
+;; (defn add-db-node-fn
+;;   [db path node-name]
+;;   {:pre [(= (type {}) clojure.lang.PersistentArrayMap)
+;;          (= (type node-name) java.lang.String)]}
+;;   ;;;(if (get-db-node-fn db (path/nodes (path/get-level-down path node-name))) ; check if exists
+;;   (if (get-db-node-fn db (path/nodes (path-hl/get-node-pathh node-name))) ; check if exists
+;;     @db
+;;     (dosync (alter db
+;;                    #(update-in % path
+;;                                into (item/make-new-item node-name))))))
+
 (defn add-db-node-fn
   [db path node-name]
   {:pre [(= (type {}) clojure.lang.PersistentArrayMap)
          (= (type node-name) java.lang.String)]}
-  (if (get-db-node-fn db (path/nodes (path/get-level-down path node-name))) ; check if exists
-    @db
-    (dosync (alter db
-                   #(update-in % path
-                               into (item/make-new-item node-name))))))
+  (dosync (alter db
+                 #(update-in % path
+                             into (item/make-new-item node-name)))))
 ;; (defn add-db-node
 ;;   [db path node-name]
 ;;   (dbg/p node-name path)

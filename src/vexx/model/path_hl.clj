@@ -8,12 +8,14 @@
 
 (defn get-node-path
   [node-name]
-  {:pre [(= (type node-name) java.lang.String)]}
-  (path/conj-node @(path/current-path) node-name))
+;;;  {:pre [(= (type node-name) java.lang.String)]}
+  (if node-name
+    (path/conj-node @(path/current-path) node-name)
+    @(path/current-path)))
 
 (defn get-selected-node-path
   []
-  (get-node-path (vol/list-selection-get-name-str)))
+  (get-node-path (vol/list-selection-get-name)))
 ;(get-selected-node-path)
 
 (defn go-level-down-selnode

@@ -76,7 +76,8 @@
 ;(list-selection-get-name)
 (defn list-selection-get-name-str
   []
-  (name (list-selection-get-name)))
+  (assert false) ;;obsolete
+  (name list-selection-get-name))
 ;(list-selection-get-name-str)
 (defn list-selection-get-name-kw
   []
@@ -88,8 +89,8 @@
   [sel-item-name]
   (dbg/p ": sel= " sel-item-name)
   (dosync (alter m-list-selection assoc :name sel-item-name)))
-
 ;; (list-selection-set-by-name "1")
+;; (list-selection-set-by-name nil)
 ;; @m-list-selection
 
 (defn list-selection-set-index

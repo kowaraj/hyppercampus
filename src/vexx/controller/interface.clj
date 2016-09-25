@@ -71,7 +71,7 @@
   Read selected node and update the rest of view
   "
   []
-  (dbg/p)
+  ;(dbg/p)
   (let [node (db-hl/get-node-nodes)]
     
     (vol/kids-data-set (vol/kids-data-make node))))
@@ -83,7 +83,7 @@
  
 (defn update-content
   []
-  (dbg/p)
+  ;(dbg/p)
   (let [node (db-hl/get-node)]
     (vol/content-data-set node))) 
 
