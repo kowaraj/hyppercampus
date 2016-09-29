@@ -1,6 +1,7 @@
 (ns vexx.model.data
   (:require
    [vexx.model.debug :as dbg]
+   [vexx.model.item :as item]
    )
   )
 
@@ -17,11 +18,7 @@
 
 (comment "-------------------------------------------------------- db -- ")
 
-(def m-db (ref 
-           {:root {:nodes {}
-                   }
-            :info "no info available"
-            }))
+(def m-db (ref (item/make-new-item "root")))
 
 (defn db-set
   [data-dict]

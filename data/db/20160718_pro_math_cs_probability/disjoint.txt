@@ -1,0 +1,13 @@
+title: Disjoint Vs Independent (events)
+tags: pro, math, cs, probability
+
+disjoint - Events are mutually exclusive if the occurrence of one event excludes the occurrence of the other(s). Mutually exclusive events cannot happen at the same time. For example: when tossing a coin, the result can either be heads or tails but cannot be both.
+
+disjoint_file01.png = screenshot of formulas
+
+
+
+independent - Events are independent if the occurrence of one event does not influence (and is not influenced by) the occurrence of the other(s). For example: when tossing two coins, the result of one flip does not affect the result of the other.
+
+independent_file01.png = screenshot of formulas
+

@@ -12,40 +12,67 @@
    )
   )
 
+(defn- update-model
+  [w d-new]
+  (let [items (vol/listbox-data-get-items d-new)
+        model (javax.swing.DefaultListModel.)]
+    (if (not (empty? items))
+      (let []
+        (doseq [item items]
+          (.addElement model (vol/listbox-data-get-item-name item)))
+        model)
+      (let []
+        model))))
+
+(defn- update-listbox
+  " Update listbox model and selection
+  "
+  [w d-old d-new]
+  (dbg/p "d-old = " d-old)
+  (dbg/p "d-new = " d-new)
+  (dbg/p "old path = " (:path d-old))
+  (dbg/p "new path = " (:path d-new))
+  (if (not (= (count (vol/listbox-data-get-items d-old))
+              (count (vol/listbox-data-get-items d-new))))
+    (.setModel w (update-model w d-new))
+    (dbg/p "number of item not changed, no upd. "))
+  
+  )
+
+
 (defn add-watch-listbox-data
   "
   To add a watch on vol/listbox-data (a ref)
   to update the main listbox view (input arg)
   "
   [listbox-widget]
-
-  (let [make-list-model
-        (fn [items]
-          (if (not (empty? items))
-            (let [model (javax.swing.DefaultListModel.)]
-              (doseq [item items]
-                (.addElement model (vol/listbox-item-get-name item)))
-              model)
-            (let [model (javax.swing.DefaultListModel.)]
-              model)))]
-
-    (add-watch (vol/listbox-data)
-               nil
-               (fn [_ _ _ items]
-                 (.setModel listbox-widget (make-list-model items))))))
-
+  (add-watch (vol/listbox-data)
+             nil
+             (fn [_ _ lb-data-old lb-data-new]
+               (update-listbox listbox-widget
+                               lb-data-old
+                               lb-data-new))))
     
 (defn listener-selection
   [e]
   (dbg/p)
   (let [sel-node-name (ss/selection e)]
+    (dbg/p "sel = " sel-node-name)
     (if sel-node-name
       (vol/list-selection-set-by-name sel-node-name)
-      (let [first-node-name (name (:name (first @(vol/listbox-data))))]
-        (if first-node-name
-          (vol/list-selection-set-by-name first-node-name)
-          ))
-      )))
+
+      ;;force list selection to 1st item
+      (let [lb (.getSource e)]
+        (.setSelectedIndex lb 0)))))
+        
+      ;; (let [first-node-name (vol/listbox-data-get-first)]
+      ;;   (dbg/p "f-sel = " first-node-name)
+      ;;   (if first-node-name
+      ;;     (let []
+      ;;       (vol/list-selection-set-by-name first-node-name))
+      ;;     (let []
+      ;;       (dbg/p "??? unknown selection "))
+      ;;     )))))
 
 (defn listener-keyreleased
   [e] 
@@ -111,3 +138,4 @@
              :selection listener-selection
              :key-released listener-keyreleased
              ))
+;(add-behavior)

@@ -8,10 +8,14 @@
 
 (def m-listbox-data (ref []))
 (defn listbox-data [] m-listbox-data)
-(defn listbox-data-set [v-of-dicts]
-  (dosync (ref-set m-listbox-data v-of-dicts)))
+(defn listbox-data-set [lb-data]
+  (dosync (ref-set m-listbox-data lb-data)))
 ;;(listbox-data-set [{:name "a" :index 1} {:name "b" :index 2}])
-(defn listbox-item-get-name [item] (name (:name item)))
+(defn listbox-data-get-item-name [item] (name (:name item)))
+
+(defn listbox-data-get-items [lb-data] (:items lb-data))
+
+(defn listbox-data-get-first [] (name (:name (first (:items @listbox-data)))))
 
 
 (defn listbox-data-make
@@ -22,13 +26,18 @@
   "
   [node] ;current node  
   (dbg/p node)
-  (let [kids-by-name (keys node)
+  (let [nodes (:nodes node)
+        kids-by-name (keys nodes)
         list-of-dicts (map
                        (fn [kn n ki i]
                          (reduce into  [{} (hash-map kn n) (hash-map ki i)]))
                        (repeat :name) kids-by-name
-                       (repeat :index) (range))]
-    (apply vector list-of-dicts)))
+                       (repeat :index) (range))
+        items (apply vector list-of-dicts)]
+    {:path (:path node)
+     :selection (list-selection-get-name)
+     :items items}))
+     
 
 ;; (listbox-data-make {:1 "a" :2 "b" :3 "c" :4 "d"})
 ;; (reduce into '({} {:1 "a"} {:2 "b"}))
@@ -70,7 +79,7 @@
 
 (defn list-selection [] m-list-selection)
 
-(defn list-selection-get-name
+(defn list-selection-get-name ;as a string
   []
   (:name @m-list-selection))
 ;(list-selection-get-name)
@@ -121,6 +130,16 @@
 ;;(content-data-set {:name "test-name" :content "test-content2"})
 
 
-;; (defn content-data-update
-;;   [data]
-  
+
+
+
+
+(comment "----------------------------------------------------- tags data -- ")
+
+(def m-tags-data (ref ""))
+(defn tags-data [] m-tags-data)
+(defn tags-data-set [node]
+  (dbg/p node)
+  (dosync (ref-set m-tags-data (:tags node))))
+
+

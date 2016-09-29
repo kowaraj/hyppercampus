@@ -11,6 +11,14 @@
    [vexx.model.db :as db]
    ))
 
+(defn get-root-node
+  "called when main listbox selection changes"
+  []
+  (let [db (data/db)
+        node-path @(path/current-path)]
+    (db/get-db-node db node-path)))
+;(keys (db/get-db-node (data/db) [:root]))
+
 (defn get-node
   "called when main listbox selection changes (only need selected node)"
   []
@@ -20,7 +28,9 @@
     (db/get-db-node db node-path)))
 
 (defn get-node-nodes
-  "called when main listbox selection changes (only need selected node)"
+  "called when main listbox selection changes (only need selected node)
+  Deprecated: use (:nodes (get-node))
+  "
   []
   (let [db (data/db)
         sel-node-name (vol/list-selection-get-name)

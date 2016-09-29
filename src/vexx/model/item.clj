@@ -1,16 +1,16 @@
 (ns vexx.model.item
   (:require
    [vexx.model.debug :as dbg]
-
-
-
+   [vexx.model.path :as path]
    ))
 
 (defn make-new-item
   [item-name]
   {:pre [(= (type item-name) java.lang.String)]}
+  (dbg/p @(path/current-path))
   {(keyword item-name) {:nodes {}
-                        :path nil
+                        :path @(path/current-path)
+                        :tags ""
                         :data {:name nil :content "default content"}
                         :link-to {}
                         :link-from {}
