@@ -1,14 +1,12 @@
 (ns vexx.controller.json
   (:require
-   [clojure.data.json :as json]
+   ;;[clojure.data.json :as json]
+   [cheshire.core :as json-ch]
    [vexx.model.data :as m-data]
    ))
 
 (def db-filename "data/db.json")
 ;(slurp db-filename)
-
-
-
   
 (defn load-from-file 
   "
@@ -26,7 +24,6 @@
 ;(load-from-file "xxx")
 
 
-
 ;; (defn- backup-old-file
 ;;   []
 ;;   (let [data-json (json/write-str @m-data/db)
@@ -42,7 +39,8 @@
   Items in db are keywords, when dumped to file transformed to strings
   "
   ([f-path]
-   (let [data-json (json/write-str @(m-data/db))]
+   (let [;;data-json (json/write-str @(m-data/db))]
+         data-json (json-ch/generate-string @(m-data/db) {:pretty true})]
     ;;;(backup-old-file)
      (spit f-path data-json)))
   ([]
