@@ -49,11 +49,11 @@
       (dbg/p (ss/text w-tf))
       (if/update-tags-data (ss/text w-tf))
       (.setBackground w-tf java.awt.Color/LIGHT_GRAY)
-      (println "listener-keytyped: Enter pressed, consume it!")
+      ;(println "listener-keytyped: Enter pressed, consume it!")
       (.consume e) ;not to print \newline in the jTextfield
       )
     (let [w-tf (.getSource e)]
-      (println "view.tags/listener-keytyped: Something else pressed")
+      ;(println "view.tags/listener-keytyped: Something else pressed")
       (.setBackground w-tf java.awt.Color/WHITE)
       )))
 

@@ -9,6 +9,7 @@
    [vexx.controller.listbox :as c-listbox]
    [vexx.controller.textin :as c-textin]
    [vexx.controller.tags :as c-tags]
+   [vexx.controller.buttons :as c-buttons]
    [vexx.controller.interface :as interface]
 ))
 
@@ -21,6 +22,9 @@
    [vexx.controller.textin :as c-textin]
    [vexx.controller.interface :as interface]
    [vexx.controller.tpane :as tpane]
+   [vexx.controller.buttons :as c-buttons]
+   [vexx.controller.utils :as c-utils]
+   [vexx.controller.json :as c-json]
 
    [vexx.model.vol]
    [vexx.model.data]
@@ -44,6 +48,7 @@
     (c-textin/add-behavior)
     (c-listbox/add-behavior)
     (c-tags/add-behavior)
+    (c-buttons/add-behavior p)
     root))
 
 (defn make-content
@@ -103,3 +108,4 @@
     (interface/add-watchers)
     f))
 ;(def x (create-view))
+

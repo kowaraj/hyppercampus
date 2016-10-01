@@ -26,5 +26,5 @@
   (let [w (a-name @m-widgets)]
     (if w
       w
-      (println "TODO: no widget found!"))))
+      (println "__ERROR__: no widget found!"))))
 

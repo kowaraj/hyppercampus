@@ -17,7 +17,7 @@
 
 (defn listbox-data-get-first [] (name (:name (first (:items @listbox-data)))))
 
-
+(declare list-selection-get-name)
 (defn listbox-data-make
   "
   Tranform the list of kids names to the list of dicts of :name and :index

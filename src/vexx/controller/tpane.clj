@@ -6,6 +6,7 @@
    [seesaw.core :as ss]
 
    [vexx.controller.interface :as if]
+   [vexx.controller.key-handler :as kh]
 
    [vexx.model.data :as data]
    [vexx.model.vol :as vol]
@@ -23,17 +24,20 @@
   into the corresponding data-item of db
   "
   [e]
-  (if (and (== (.getModifiers e) java.awt.event.InputEvent/CTRL_MASK)
-           (== (.getKeyCode e) java.awt.event.KeyEvent/VK_S))
+  (if (kh/is-pressed--ctrl-s e)
     (let [w-tf (.getSource e)
           ;; tab-name (name (ss/config w-tf :id)) ; get the name of the _TAB_ from the button's _ID_
           ;; tf-content (ss/text w-tf)
           ]
       (println "Ctrl+S pressed, saving the doc... For"); tab=" tab-name)
+      (println "---> " w-tf); tab=" tab-name)
       (if/update-content-data  (ss/text w-tf))
-
+      ;;(.setBackground w-tf java.awt.Color/LIGHT_GRAY)
+      (.setBackground w-tf (java.awt.Color. 240 240 240))
       )
-    (println "something else pressed")))
+    (let [w-tf (.getSource e)]
+      (.setBackground w-tf java.awt.Color/WHITE))))
+;;;    (println "something else pressed")))
 
 
 
@@ -48,12 +52,14 @@
                     :wrap-lines? true
                     :columns 10
                     :rows 10)
-        
         ]
+    ;;(.setBackground tf java.awt.Color/LIGHT_GRAY)
+    (.setBackground tf (java.awt.Color. 240 240 240))
+    
     (ss/listen tf :key-released #(tf--listener-keyreleased %))
     (.removeAll p)
     (.add p tf)
-    (println "re-do the panel")
+    ;(println "re-do the panel")
     (.revalidate p)
     (.repaint p)
 
@@ -78,7 +84,6 @@
   (add-watch (vol/content-data)
              nil
              (fn [_ _ _ d]
-               ;(dbg/p "fn ================================= " d)
                (populate-content-panel the-widget d))))
 
 

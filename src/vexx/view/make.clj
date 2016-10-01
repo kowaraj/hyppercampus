@@ -78,14 +78,16 @@
 (defn make-button-save
   []
   (let [b (ss/button :id :buttonSave :class :tool :text "Save")]
-    (ss/listen b :action (fn [e] (c-json/save-to-file)))
+    (widgets/add-w b)
+    ;;(ss/listen b :action (fn [e] (c-json/save-to-file)))
     b))
 
 
 (defn make-button-load
   []
   (let [b (ss/button :id :buttonLoad :class :tool :text "Load")]
-    (ss/listen b :action (fn [e] (c-json/load-from-file)))
+    (widgets/add-w b)
+    ;;(ss/listen b :action (fn [e] (c-json/load-from-file)))
     b))
 
 
