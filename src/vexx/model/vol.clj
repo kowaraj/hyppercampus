@@ -23,9 +23,15 @@
   Tranform the list of kids names to the list of dicts of :name and :index
     from : [:2-1 :2-2]
     to   : ({:name :2-1, :index 0} {:name :2-2, :index 1})
+  Arguments:
+    node      : current node
+    the-cause : the reason why the update required
   "
-  [node] ;current node  
-  (dbg/p node)
+  [node the-cause] ;current node
+  {:pre [(or (= the-cause :db-changed)
+             (= the-cause :path-changed))]}
+  ;(dbg/p node)
+  
   (let [nodes (:nodes node)
         kids-by-name (keys nodes)
         list-of-dicts (map
@@ -36,7 +42,8 @@
         items (apply vector list-of-dicts)]
     {:path (:path node)
      :selection (list-selection-get-name)
-     :items items}))
+     :items items
+     :cause the-cause}))
      
 
 ;; (listbox-data-make {:1 "a" :2 "b" :3 "c" :4 "d"})
@@ -61,7 +68,7 @@
     to   : ({:name :2-1, :index 0} {:name :2-2, :index 1})
   "
   [node] ;current node (parent)
-  (dbg/p node)
+  ;;;(dbg/p node)
   (let [kids-by-name (keys node)
         list-of-dicts (map
                        (fn [kn n ki i]
@@ -139,7 +146,7 @@
 (def m-tags-data (ref ""))
 (defn tags-data [] m-tags-data)
 (defn tags-data-set [node]
-  (dbg/p node)
+;;  (dbg/p node)
   (dosync (ref-set m-tags-data (:tags node))))
 
 

@@ -41,20 +41,6 @@
 
 
 
-;; ;; ------------------------------------------------- part I ---
-;; (defn get-item
-;;   "Get item  - from db if found, else default item"
-;;   [item-name]
-;;   (dbg/p item-name)
-;;   (db/get-db-node (data/db) (path/go-level-down (keyword item-name))))
-
-;; (defn add-item
-;;   "Add item to db"
-;;   [item-name]
-;;   (dbg/p item-name)
-;;   (db/add-db-node (data/db) @(path/current-path) item-name))
-
-
 
 ;; ------------------------------------------------- part II ---
 
@@ -63,36 +49,10 @@
   "
   Takes the root-node and updates the listbox data
   "
-  []
-;;;  (let [root-node (db/get-db-node-nodes (data/db) @(path/current-path))]
-  (let [root-node (db-hl/get-root-node)]
-    (vol/listbox-data-set (vol/listbox-data-make root-node))))
+  [the-cause]
+  (let [root-node (db-hl/get-root-node)]    
+    (vol/listbox-data-set (vol/listbox-data-make root-node the-cause))))
 
-
-;; ;replaced by: update-selected-node-view
-;; (defn update-kids-data
-;;   "
-;;   Read selected node and update the rest of view
-;;   "
-;;   []
-;;   ;(dbg/p) 
-;;   (let [node (db-hl/get-node-nodes)] ;;TODO: rename get-node-nodes - it get a node, not many nodes
-;;     (vol/kids-data-set (vol/kids-data-make node))))
-
-
-;; ;replaced by: update-selected-node-view
-;; (defn update-tags
-;;   []
-;;   (let [node (db-hl/get-node)]
-;;     (vol/content-data-set node)))
-
- 
-;; ;replaced by: update-selected-node-view
-;; (defn update-content
-;;   []
-;;   ;(dbg/p)
-;;   (let [node (db-hl/get-node)]
-;;     (vol/content-data-set node))) 
 
 (defn update-selected-node-view
   []
@@ -114,7 +74,7 @@
   [_ _ _ _]
   ;;;(vol/listbox-data-set (vol/get-current-listbox-data)))
   (println "! callback-db-changed !")
-  (update-listbox-data)
+  (update-listbox-data :db-changed)
   (update-selected-node-view) ;(update-kids-data)
   )
 
@@ -122,7 +82,7 @@
   [_ _ _ _]
   ;;;(vol/listbox-data-set (vol/get-current-listbox-data)))
   (println "! callback-path-changed !")
-  (update-listbox-data)
+  (update-listbox-data :path-changed)
   (update-selected-node-view) ;(update-kids-data)
   )
 

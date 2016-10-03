@@ -28,16 +28,19 @@
   " Update listbox model and selection
   "
   [w d-old d-new]
-  (dbg/p "d-old = " d-old)
-  (dbg/p "d-new = " d-new)
-  (dbg/p "old path = " (:path d-old))
-  (dbg/p "new path = " (:path d-new))
-  (if (not (= (count (vol/listbox-data-get-items d-old))
-              (count (vol/listbox-data-get-items d-new))))
-    (.setModel w (update-model w d-new))
-    (dbg/p "number of item not changed, no upd. "))
-  
-  )
+  ;; (dbg/p "d-old = " d-old)
+  ;; (dbg/p "d-new = " d-new)
+  ;; (dbg/p "old path = " (:path d-old))
+  ;; (dbg/p "new path = " (:path d-new))
+  (dbg/p "cause = " (:cause d-new))
+  (cond (= (:cause d-new) :path-changed)
+        (.setModel w (update-model w d-new))
+        (= (:cause d-new) :db-changed)
+        (if (not (= (count (vol/listbox-data-get-items d-old))
+                    (count (vol/listbox-data-get-items d-new))))
+          (.setModel w (update-model w d-new)))
+        :else
+        (dbg/p "unknown cause, don't update the listbox model")))
 
 
 (defn add-watch-listbox-data
@@ -55,7 +58,7 @@
     
 (defn listener-selection
   [e]
-  (dbg/p)
+  ;(dbg/p)
   (let [sel-node-name (ss/selection e)]
     (dbg/p "sel = " sel-node-name)
     (if sel-node-name
