@@ -14,7 +14,8 @@
   "
   ([f-name]
    (let [json-str (slurp f-name)
-         loaded-db (json/read-str json-str :key-fn keyword)
+         ;;loaded-db (json/read-str json-str :key-fn keyword)
+         loaded-db (json-ch/parse-string json-str true)
          ]
      (m-data/db-set loaded-db)))
   ([]

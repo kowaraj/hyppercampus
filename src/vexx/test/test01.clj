@@ -2,7 +2,8 @@
   (:require
    [seesaw.core :as ss]))
 
-
+(comment
+  
 (def f  (ss/frame
    :title "Vexx"
    :size [400 :by 400]))
@@ -24,7 +25,7 @@
 (.setBackground t java.awt.Color/LIGHT_GRAY)
 (.setBackground t java.awt.Color/WHITE)
 
- [fc (javax.swing.JFileChooser.)]
+ [f (javax.swing.JFileChooser.)]
 
 (let [ch (javax.swing.JFileChooser.)]
   (if (= javax.swing.JFileChooser/APPROVE_OPTION
@@ -43,3 +44,6 @@ chooser.setCurrentDirectory(new java.io.File("."));
 
 (.dispose f)
 
+
+
+)
