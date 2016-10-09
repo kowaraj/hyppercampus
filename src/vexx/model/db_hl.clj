@@ -62,5 +62,17 @@
     (db/del-db-node db path sel-node-name)))
 ;(path-hl/get-node-path "1")
 ;(db/del-db-node (data/db) [:root] "1")
-  
+
+
+(defn rename-selected-node
+  [new-name]
+  (dbg/p new-name)
+  (let [db (data/db)
+        sel-node-name (vol/list-selection-get-name)
+        path @(path/current-path)
+        ]
+    (db/rename-db-node db
+                       path
+                       (keyword sel-node-name)
+                       (keyword new-name))))
 

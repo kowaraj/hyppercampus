@@ -38,4 +38,8 @@
   [db path attr-name]
   (db-ll/del-db-node-attr-fn db (path/nodes path) attr-name))
 
+(defn rename-db-node
+  [db path old-name new-name]
+  (db-ll/rename-db-node-fn db (path/nodes path) old-name new-name))
+
 

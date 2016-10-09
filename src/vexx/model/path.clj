@@ -16,6 +16,7 @@
 ;; (def m-current-path (ref [1 2 3]))
 ;; (def m-current-path (ref [:root]))
 
+
 (defn current-path [] m-current-path)
 ;(current-path)
 
@@ -38,8 +39,8 @@
 (defn go-level-down
   [node-name] ; node-name, not item-name, means a keyword
   {:pre [(= (type node-name) clojure.lang.Keyword)]}
-  (dbg/p node-name)
-  (dbg/p (type node-name))
+  ;; (dbg/p node-name)
+  ;; (dbg/p (type node-name))
   (dosync (alter m-current-path conj node-name)))
 ;; (def m-current-path (ref [1 2 3]))
 ;(go-level-down 4)
@@ -76,3 +77,5 @@
 ;;(interleave [1 2 3] (repeat :nodes)))
 ;;(type (pop [1 2 3]))
 ;; (attr [1 2 3])
+
+

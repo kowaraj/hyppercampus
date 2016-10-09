@@ -20,10 +20,15 @@
 
 (defn go-level-down-selnode
   []
-  (dbg/p)
+  ;(dbg/p)
   (let [k (vol/list-selection-get-name-kw)]
-    (dbg/p k)
+    ;(dbg/p k)
     (path/go-level-down k)))
+
+(defn go-level-up-to-parent
+  []
+  ;(dbg/p)
+  (path/go-level-up))
 
 
 

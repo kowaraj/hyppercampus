@@ -2,6 +2,8 @@
   (:require
    [vexx.model.debug :as dbg]
    [vexx.model.path :as path]
+
+   [vexx.util.time :as time]
    ))
 
 (defn make-new-item
@@ -14,6 +16,7 @@
                         :data {:name nil :content "default content"}
                         :link-to {}
                         :link-from {}
+                        :ts (time/date)
                         }})
   
 ;; (defn- add-item-to-path

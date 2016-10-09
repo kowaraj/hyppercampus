@@ -88,9 +88,7 @@
         ] ;end-of-let
     (ss/top-bottom-split 
      (ss/left-right-split lp rp)
-     (ss/text :id :text-log
-              :text "Logging.." :editable? true :columns 10
-              :multi-line? true :wrap-lines? true :rows 3)
+     (v-make/make-debug-log)
      )))
 
 (defn make-frame []
@@ -109,3 +107,27 @@
     f))
 ;(def x (create-view))
 
+;;TODO:
+
+;; !!! + return to the parent from kids, not to the first element of listbox
+
+;; !   + add more info (like timestamp?) for the current node in status? log?
+;; !   + move node from parent to parent
+;; !!  + change the name of a node
+;; !   . loosing focus in listbox when are back from kids:
+;;       listbox's focus is set to 1st element, not the _parent_!
+;; !   + display current db file in a status bar
+;; -   + sorting kids/items by ts
+;; ?   + copy the tags of the node when a kid created
+;; !!! + search by tags
+;; !!! + search by name
+
+;; TODO: long short
+
+;; !   + open any app in content window (emacs, image, svg, video,...)
+;; !   + RTF format or external editor for content-text (syntax, code)
+;; !   + another type of kids - "question + answer" (double/split ? jTextField)
+
+
+;; DONE:
+;; !!! + date when added a kid (timestamp) 

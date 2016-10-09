@@ -12,8 +12,10 @@
             [vexx.controller.kids :as c-kids]
             [vexx.controller.tpane :as c-tpane]
             [vexx.controller.tags :as c-tags]
+            [vexx.controller.debug-log :as c-debug-log]
 
             ))
+
 
 (defn make-listbox
   " Creates listbox widget
@@ -106,6 +108,16 @@
     (c-tpane/add-watch-content-data content-panel)
     content-panel))
 
+
+(defn make-debug-log
+  []
+  (let [w (ss/text :id :text-log
+                   :text "Logging.." :editable? true :columns 10
+                   :multi-line? true :wrap-lines? true :rows 3)]
+    
+    (widgets/add-w w)
+    (c-debug-log/add-a-watch w)
+    w))
 
 
 

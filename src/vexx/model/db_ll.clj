@@ -48,6 +48,13 @@
 ;;   (dbg/p node-name path)
 ;;   (add-db-node-fn db (path/nodes path) node-name))
 
+(defn set-db-node-fn
+  [db path node-name node-value]
+  {:pre [(= (type {}) clojure.lang.PersistentArrayMap)
+         (= (type node-name) java.lang.String)]}
+  (dosync (alter db
+                 #(update-in % path
+                             assoc node-name node-value))))
 
 
 (defn set-db-node-attr-fn
@@ -85,3 +92,22 @@
 ;;   [db path attr-name]
 ;;   (del-db-node-attr-fn db (path/nodes path) attr-name))
 
+(defn rename-db-node-fn
+  [db path old-name new-name]
+  (dbg/p path)
+  (dbg/p old-name)
+  (dbg/p new-name)
+  (dbg/p "map = " {old-name new-name})
+  (dosync (alter db
+                 #(update-in % path
+                             clojure.set/rename-keys
+                             {
+                              old-name
+                              new-name}))))
+
+
+
+  (def a 1)
+  (def b 2)
+  (type {a b})
+  (into {} {a b})

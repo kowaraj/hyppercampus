@@ -47,7 +47,7 @@
   (if (kh/is-enter-or-ctrl-s e)
     (let [w-tf (.getSource e)]
       (dbg/p (ss/text w-tf))
-      (if/update-tags-data (ss/text w-tf))
+      (if-2/update-tags-data (ss/text w-tf))
       (.setBackground w-tf java.awt.Color/LIGHT_GRAY)
       ;(println "listener-keytyped: Enter pressed, consume it!")
       (.consume e) ;not to print \newline in the jTextfield

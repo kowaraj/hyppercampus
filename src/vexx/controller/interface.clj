@@ -65,7 +65,13 @@
         node (db-hl/get-node-nodes)] ;;TODO: rename get-node-nodes - it gets a node, not many nodes
     (vol/kids-data-set (vol/kids-data-make node))
     (vol/content-data-set root-node)
-    (vol/tags-data-set root-node)))
+    (vol/tags-data-set root-node)
+
+    ;(dbg/p root-node)  
+    (vol/debug-data-set root-node)
+    ))
+
+
   
 
 ;; ------------------------------------------------- part III ---
@@ -116,53 +122,4 @@
              callback-list-selection-changed)
   )
 ;(add-watchers)
-
-
-
-;; ------------------------------------------------- part IV ---
-
-;; to modify (update) db from the widgets
-
-(defn update-content-data
-  [tf-text]
-  ;(dbg/p tf-text)
-  ;; pre: some keys must be present
-  (db/set-db-node-attr (data/db)
-;                       (path-hl/get-node-path (vol/list-selection-get-name)
-                       (path-hl/get-selected-node-path)
-                       :data
-                       {:name "some-def-name" :content tf-text}))
-
-(defn jump-to-kids-of-sel-node
-  []
-  (path-hl/go-level-down-selnode))
-
-(defn jump-to-parent-of-sel-node
-  []
-  (path/go-level-up))
-
-
-(defn add-kid-to-selected-node
-  [kid-dict]
-;; pre: some keys must be present
-  (dbg/p kid-dict)
-  (let [n (:name kid-dict)
-        t (:type kid-dict)]
-    (db-hl/add-node n)))
-;(db-hl/add-node "xxx")
-
-  
-(defn delete-selected-node
-  []
-  (dbg/p)
-  (db-hl/del-selected-node)
-  )
-
-(defn update-tags-data
-  [tags-str]
-  (dbg/p)
-  (db/set-db-node-attr (data/db)
-                       (path-hl/get-selected-node-path)
-                       :tags
-                       tags-str))
 

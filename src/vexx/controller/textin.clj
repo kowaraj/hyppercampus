@@ -7,6 +7,7 @@
    [vexx.model.debug :as dbg]
    [vexx.model.db-hl :as db-hl]
    [vexx.model.widgets :as widgets]
+   [vexx.model.vol :as vol]
    )
   )
 
@@ -14,7 +15,9 @@
   [e]
   (let [w-text-in (.getSource e)
         new-el-name (ss/text w-text-in)]
-    (db-hl/add-node-to-root new-el-name)))
+    (db-hl/add-node-to-root new-el-name)
+    (vol/stack-add-node new-el-name)
+    ))
   
 (defn- listener-keytyped
   [e]
