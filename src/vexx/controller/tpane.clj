@@ -5,7 +5,7 @@
   (:require
    [seesaw.core :as ss]
 
-   [vexx.controller.interface :as if]
+   [vexx.controller.interface-2 :as if-2]
    [vexx.controller.key-handler :as kh]
 
    [vexx.model.data :as data]
@@ -24,14 +24,14 @@
   into the corresponding data-item of db
   "
   [e]
-  (if (kh/is-pressed--ctrl-s e)
+  (if (kh/is-ctrl-s e)
     (let [w-tf (.getSource e)
           ;; tab-name (name (ss/config w-tf :id)) ; get the name of the _TAB_ from the button's _ID_
           ;; tf-content (ss/text w-tf)
           ]
       (println "Ctrl+S pressed, saving the doc... For"); tab=" tab-name)
       (println "---> " w-tf); tab=" tab-name)
-      (if/update-content-data  (ss/text w-tf))
+      (if-2/update-content-data  (ss/text w-tf))
       ;;(.setBackground w-tf java.awt.Color/LIGHT_GRAY)
       (.setBackground w-tf (java.awt.Color. 240 240 240))
       )

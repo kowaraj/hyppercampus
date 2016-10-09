@@ -2,7 +2,7 @@
   (:require
    [seesaw.core :as ss]
 
-   [vexx.controller.interface :as if]
+   [vexx.controller.interface-2 :as if-2]
    [vexx.controller.key-handler :as kh]
 
    [vexx.model.debug :as dbg]
@@ -30,7 +30,7 @@
 (defn- listener-keypressed
   [e]
   (dbg/p)
-  (if (kh/is-typed--enter e)
+  (if (kh/is-enter e)
     (.consume e)
     (println "listener-keypressed: something else pressed")))
 

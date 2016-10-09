@@ -7,25 +7,25 @@
    [vexx.model.item :as item]
 ))
 
-(def db (ref {
-              :root {
-                     :nodes
-                     (reduce into
-                             [{}
-                              (item/make-new-item "1")
-                              (item/make-new-item "2")
-                              ])
-                     :info "no info available"
-                     }
-              }))
+;; (def db (ref {
+;;               :root {
+;;                      :nodes
+;;                      (reduce into
+;;                              [{}
+;;                               (item/make-new-item "1")
+;;                               (item/make-new-item "2")
+;;                               ])
+;;                      :info "no info available"
+;;                      }
+;;               }))
 
-;@db
+;; ;@db
 
             
-(def path-1 [:root :1])
-(def path-2 [:root :2])
+;; (def path-1 [:root :1])
+;; (def path-2 [:root :2])
 
-(db/get-db-node db [:root])
-(db/get-db-node db [:root :1])
-(:nodes (:root @db))
-(db/add-db-node db path-1 "1-1")
+;; (db/get-db-node db [:root])
+;; (db/get-db-node db [:root :1])
+;; (:nodes (:root @db))
+;; (db/add-db-node db path-1 "1-1")

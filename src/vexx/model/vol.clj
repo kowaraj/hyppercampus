@@ -113,6 +113,13 @@
      (alter m-stack conj m)
      (ref-set m-last-action m))))
 
+(defn stack-pop
+  []
+  (let [m (peek @m-stack)]
+    (dosync (alter m-stack pop))
+            ;(ref-set m-last-action :pop))
+    m))
+
 (defn stack-add-node
   [a-name]
   (dosync (ref-set m-last-action {:sel-name a-name :action :add-node})))
@@ -121,6 +128,7 @@
 (defn stack-go-level-down
   []
   (stack-push :level-down))
+  
 
 (defn stack-go-level-up
   []
@@ -131,12 +139,6 @@
     (println "up sel = " m)))
 ;(stack-go-level-up)
 
-(defn stack-pop
-  []
-  (let [m (peek @m-stack)]
-    (dosync (alter m-stack pop))
-            ;(ref-set m-last-action :pop))
-    m))
 
 (defn is-stack-action-level-up
   []
@@ -145,6 +147,11 @@
     false))
 ;(is-stack-action-level-up)
 ;(stack-push :level-up)
+(defn is-stack-action-level-down
+  []
+  (if (= :level-down (:action @m-last-action))
+    true
+    false))
 
 
 (comment "----------------------------------------------------- listbox sel -- ")
@@ -184,10 +191,15 @@
 (defn list-selection-get-index
   []
   (dbg/p)
-  (if (is-stack-action-level-up)
-    (let [sel-name (:sel-name @m-last-action)]
-      (listbox-data-get-index sel-name))))
-    ;;(.setSelectedIndex w 1)))
+  (cond (is-stack-action-level-up)
+        (let [sel-name (:sel-name @m-last-action)]
+          (listbox-data-get-index sel-name))
+        (is-stack-action-level-down)
+        0
+        :else
+        0))
+;;(listbox-data-get-index "2")
+;;(.setSelectedIndex w 1))) (list-selection-get-index)
 
 
 (comment "----------------------------------------------------- content data -- ")
