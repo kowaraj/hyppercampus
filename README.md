@@ -10,15 +10,12 @@
 
 ### Table
 
-| asdf               |                   |                           |
-|--------------------|-------------------|---------------------------| 
+
 | widget's purpose   |  vol ref          | ref's purpose             | 
 |--------------------|-------------------|---------------------------| 
-
-
-| content-data       | m-content-data    |
-| tags-data          | m-tags-data       |
-| ...                |                   |
+| content-data       | m-content-data    |                           |
+| tags-data          | m-tags-data       |                           | 
+| ...                |                   |                           |
 | -------------------|-------------------|---------------------------|
 |                    |  m-current-path   | keep current path         |
 |                    |  m-listbox-sel    | keep selected item name   |
